@@ -44,7 +44,7 @@ app.post("/tasks",(req,res)=>
 {
     const {title}=req.body;
 
-    if(!title|| title.trim()=="")
+    if(!title|| title.trim()==="")
     {
         return res.status(400).json({
             error:"Title is required"
@@ -63,18 +63,44 @@ app.post("/tasks",(req,res)=>
     res.status(201).json(task)
 
 })
+app.put("/tasks/:id",(req,res)=>
+{
+    const id=parseInt(req.params.id);
 
+    const task=tasks.find(t=>t.id===id);
 
+    if(!task)
+    {
+        return status (400).json(
+            {
+                error:"Task not found"
+            }
+        );
+    }
 
+    const {title,done}=req.body;
+    if(title=== undefined && done===undefined )
+    {
+        return res.status(400).json({
+            error: "empty boady"
+        })
+    }
+    if(title===undefined &&title.trim()==="")
+    {
+        return res.status(400).json({
+            error:"Title cannot be empty"
+        })
 
-
-
-
-
-
-
-
-
+    }
+    if(title!==undefiend)
+    {
+        task.tile=title;
+    }
+     if (done !== undefined) {
+        task.done = done;
+    }
+     res.status(200).json(task);
+})
 app.get("/",(req,res)=>
 {
     res.json(
@@ -96,6 +122,27 @@ app.get("/health",(req,res)=>
     )
 })
 
+app.delete("/tasks/:id", (req, res) => {
+
+    const id = parseInt(req.params.id);
+
+    // Task ka index dhoondo
+    const index = tasks.findIndex(t => t.id === id);
+
+    // Agar task nahi mili
+    if (index === -1) {
+        return res.status(404).json({
+            error: "Task not found"
+        });
+    }
+
+    // Task delete karo
+    tasks.splice(index, 1);
+
+    // Success (empty body)
+    res.status(204).send();
+
+});
 app.listen(PORT,()=>
 {
     console.log(`server running on ${PORT}`);
