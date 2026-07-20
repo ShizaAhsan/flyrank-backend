@@ -1,43 +1,94 @@
 # FlyRank Backend API
 
-A simple REST API built with Node.js and Express for managing tasks.
+## What This Is
 
-## API Documentation (Swagger UI)
+FlyRank Backend API is a REST API built with Node.js and Express.js for managing tasks.
 
-This project includes interactive API documentation using Swagger UI.
+The project provides complete CRUD operations:
+- Create tasks
+- Read tasks
+- Update tasks
+- Delete tasks
 
-Swagger provides a user-friendly interface where you can view all available endpoints and test API requests without using curl.
+It also includes API documentation using Swagger UI.
 
-### Swagger URL
+---
+
+## Installation & Running
+
+Clone the repository:
+
+```bash
+git clone https://github.com/ShizaAhsan/flyrank-backend.git
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run the server:
+
+```bash
+node server.js
+```
+
+The API will be available at:
+
+```
+http://localhost:3000
+```
+
+Swagger documentation:
 
 ```
 http://localhost:3000/docs
 ```
 
-### Available Endpoints
+---
 
-| Method | Endpoint      | Description             |
-| ------ | ------------- | ----------------------- |
-| GET    | `/`           | API information         |
-| GET    | `/health`     | Check server health     |
-| GET    | `/tasks`      | Get all tasks           |
-| GET    | `/tasks/{id}` | Get task by ID          |
-| POST   | `/tasks`      | Create a new task       |
-| PUT    | `/tasks/{id}` | Update an existing task |
-| DELETE | `/tasks/{id}` | Delete a task           |
+## API Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/` | API information |
+| GET | `/health` | Health check |
+| GET | `/tasks` | Get all tasks |
+| GET | `/tasks/:id` | Get task by ID |
+| POST | `/tasks` | Create a new task |
+| PUT | `/tasks/:id` | Update a task |
+| DELETE | `/tasks/:id` | Delete a task |
+
+---
+
+## Curl Test Output
+
+Example:
+
+```bash
+curl -i http://localhost:3000/tasks
+```
+
+Response:
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+[
+  {
+    "id": 1,
+    "title": "Learn Backend",
+    "done": false
+  }
+]
+```
+
+---
 
 ## Swagger UI Screenshot
 
-![Swagger UI Documentation](swagger.png)
+Swagger UI documentation
 
-## CRUD Testing
-
-The complete CRUD flow was tested using Swagger UI:
-
-1. Create a task using `POST /tasks`
-2. Retrieve tasks using `GET /tasks`
-3. Update a task using `PUT /tasks/{id}`
-4. Delete a task using `DELETE /tasks/{id}`
-
-All endpoints successfully respond with JSON data and proper HTTP status codes.
-![alt text](image.png)
+![Swagger UI](image.png)
