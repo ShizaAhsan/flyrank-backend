@@ -1,0 +1,43 @@
+# FlyRank Backend API
+
+A simple REST API built with Node.js and Express for managing tasks.
+
+## API Documentation (Swagger UI)
+
+This project includes interactive API documentation using Swagger UI.
+
+Swagger provides a user-friendly interface where you can view all available endpoints and test API requests without using curl.
+
+### Swagger URL
+
+```
+http://localhost:3000/docs
+```
+
+### Available Endpoints
+
+| Method | Endpoint      | Description             |
+| ------ | ------------- | ----------------------- |
+| GET    | `/`           | API information         |
+| GET    | `/health`     | Check server health     |
+| GET    | `/tasks`      | Get all tasks           |
+| GET    | `/tasks/{id}` | Get task by ID          |
+| POST   | `/tasks`      | Create a new task       |
+| PUT    | `/tasks/{id}` | Update an existing task |
+| DELETE | `/tasks/{id}` | Delete a task           |
+
+## Swagger UI Screenshot
+
+![Swagger UI Documentation](swagger.png)
+
+## CRUD Testing
+
+The complete CRUD flow was tested using Swagger UI:
+
+1. Create a task using `POST /tasks`
+2. Retrieve tasks using `GET /tasks`
+3. Update a task using `PUT /tasks/{id}`
+4. Delete a task using `DELETE /tasks/{id}`
+
+All endpoints successfully respond with JSON data and proper HTTP status codes.
+![alt text](image.png)

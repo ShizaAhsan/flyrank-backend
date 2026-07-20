@@ -1,7 +1,17 @@
-const express=require("express")
+const express=require("express");
 const app=express();
 const PORT=3000;
+
+const swaggerUI=require("swagger-ui-express");
+const swaggerDocument=require("./openapi.json");
+
+
 app.use(express.json());
+
+app.use("/docs",
+    swaggerUI.serve,
+    swaggerUI.setup(swaggerDocument)
+);
 const tasks=[
     {
         id : 1,
@@ -65,63 +75,66 @@ app.post("/tasks",(req,res)=>
 })
 app.put("/tasks/:id",(req,res)=>
 {
+
     const id=parseInt(req.params.id);
 
-    const task=tasks.find(t=>t.id===id);
+
+    const task=tasks.find(
+        t=>t.id===id
+    );
+
 
     if(!task)
     {
-        return status (400).json(
-            {
-                error:"Task not found"
-            }
-        );
+        return res.status(404).json(
+        {
+            error:"Task not found"
+        });
     }
+
+
 
     const {title,done}=req.body;
-    if(title=== undefined && done===undefined )
-    {
-        return res.status(400).json({
-            error: "empty boady"
-        })
-    }
-    if(title===undefined &&title.trim()==="")
-    {
-        return res.status(400).json({
-            error:"Title cannot be empty"
-        })
 
-    }
-    if(title!==undefiend)
-    {
-        task.tile=title;
-    }
-     if (done !== undefined) {
-        task.done = done;
-    }
-     res.status(200).json(task);
-})
-app.get("/",(req,res)=>
-{
-    res.json(
-    {
-        "name":"Task api",
-        "version":"1.0",
-        "endpoints":["/tasks"] 
-        
-    });
 
-})
 
-app.get("/health",(req,res)=>
-{
-    res.json(
+    if(title===undefined && done===undefined)
+    {
+        return res.status(400).json(
         {
-            "status":"ok"
-        }
-    )
-})
+            error:"Empty body"
+        });
+    }
 
+
+
+    if(title !== undefined && title.trim()==="")
+    {
+        return res.status(400).json(
+        {
+            error:"Title cannot be empty"
+        });
+    }
+
+
+
+    if(title !== undefined)
+    {
+        task.title=title;
+    }
+
+
+
+    if(done !== undefined)
+    {
+        task.done=done;
+    }
+
+
+
+    res.status(200).json(task);
+
+});
 app.delete("/tasks/:id", (req, res) => {
 
     const id = parseInt(req.params.id);
